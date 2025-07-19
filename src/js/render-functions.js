@@ -1,3 +1,14 @@
+export function createGallery(dataArr) {
+  return dataArr
+    .map(
+      item =>
+        `<li><a href="${item.largeImageURL}"><img src="${item.webformatURL}" alt="${item.tags}" width="360" height="200">
+      </a>
+      </li>`
+    )
+    .join('');
+}
+
 //RENDER FUNCTIONS
 
 // У файлі render-functions.js створи екземпляр SimpleLightbox для роботи з модальним вікном та зберігай функції для відображення елементів інтерфейсу:

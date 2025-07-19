@@ -7,3 +7,34 @@
 /* Common styles */
 @import url('./reset.css');
 @import url('./base.css');
+@import url('izitoast/dist/css/iziToast.min.css');
+
+
+.gallery {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.form {
+  margin-bottom: 32px;
+}
+
+.form input {
+  width: 272px;
+  height: 40px;
+  font-size: 16px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+}
+
+button {
+  width: 91px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4E75FF;
+  color: #fff;
+
+}
