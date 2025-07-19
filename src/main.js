@@ -1,19 +1,20 @@
 import iziToast from 'izitoast';
 import { getPhotos } from './js/pixabay-api';
-import { createGallery } from './js/render-functions';
+import {
+  clearGallery,
+  createGallery,
+  hideLoader,
+  showLoader,
+} from './js/render-functions';
 
 // References
-export const refs = {
-  formEl: document.querySelector('.form'),
-  galleryEl: document.querySelector('.gallery'),
-};
-
-// Utilities
+const formEl = document.querySelector('.form');
 
 // Handlers
 function onSubmit(event) {
   event.preventDefault();
-  refs.galleryEl.innerHTML = '';
+  clearGallery();
+  showLoader();
 
   const searchQuery = event.target.elements['search-text'].value.trim();
   if (!searchQuery) {
@@ -23,18 +24,25 @@ function onSubmit(event) {
     });
   }
 
-  getPhotos(searchQuery).then(resp => {
-    const respData = resp.data.hits;
-    if (respData.length === 0) {
-      return iziToast.error({
-        message:
-          'Sorry there are no images matching your search query. Please try again!',
-        position: 'topRight',
-      });
-    }
-    refs.galleryEl.innerHTML = createGallery(respData);
-  });
+  getPhotos(searchQuery)
+    .then(resp => {
+      const respData = resp.data.hits;
+
+      if (respData.length === 0) {
+        return iziToast.error({
+          message:
+            'Sorry there are no images matching your search query. Please try again!',
+          position: 'topRight',
+        });
+      }
+
+      createGallery(respData);
+    })
+    .catch(err => console.log(err))
+    .finally(() => hideLoader());
+
+  event.target.reset();
 }
 
 // Event Listeners
-refs.formEl.addEventListener('submit', onSubmit);
+formEl.addEventListener('submit', onSubmit);

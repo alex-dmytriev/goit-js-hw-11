@@ -1,19 +1,37 @@
-export function createGallery(dataArr) {
-  return dataArr
+import SimpleLightbox from 'simplelightbox';
+
+const galleryEl = document.querySelector('.gallery');
+const loaderEl = document.querySelector('.loader');
+
+const simpleGallery = new SimpleLightbox('.gallery a');
+
+export function createGallery(images) {
+  const dynamicMarkup = images
     .map(
       item =>
-        `<li><a href="${item.largeImageURL}"><img src="${item.webformatURL}" alt="${item.tags}" width="360" height="200">
+        `<li><a class="img-link" href="${item.largeImageURL}"><img src="${item.webformatURL}" alt="${item.tags}" width="360" height="200"><ul class="img-meta">
+      <li class="meta-list-item"><span class="meta-item-title">Likes</span> ${item.likes}</li>
+      <li class="meta-list-item"><span class="meta-item-title">Views</span> ${item.views}</li>
+      <li class="meta-list-item"><span class="meta-item-title">Comments</span> ${item.comments}</li>
+      <li class="meta-list-item"><span class="meta-item-title">Downloads</span> ${item.downloads}</li>
+      </ul>
       </a>
       </li>`
     )
     .join('');
+  galleryEl.innerHTML = dynamicMarkup;
+  simpleGallery.refresh();
 }
 
-//RENDER FUNCTIONS
+// Utilities
+export function clearGallery() {
+  galleryEl.innerHTML = '';
+}
 
-// У файлі render-functions.js створи екземпляр SimpleLightbox для роботи з модальним вікном та зберігай функції для відображення елементів інтерфейсу:
+export function showLoader() {
+  loaderEl.classList.remove('is-hidden');
+}
 
-// createGallery(images). Ця функція повинна приймати масив images, створювати HTML-розмітку для галереї, додавати її в контейнер галереї та викликати метод екземпляра SimpleLightbox refresh(). Нічого не повертає.
-// clearGallery(). Ця функція нічого не приймає та повинна очищати вміст контейнера галереї. Нічого не повертає.
-// showLoader(). Ця функція нічого не приймає, повинна додавати клас для відображення лоадера. Нічого не повертає.
-// hideLoader(). Ця функція нічого не приймає, повинна прибирати клас для відображення лоадера. Нічого не повертає.
+export function hideLoader() {
+  loaderEl.classList.add('is-hidden');
+}

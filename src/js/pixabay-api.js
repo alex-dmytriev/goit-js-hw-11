@@ -10,12 +10,8 @@ export function getPhotos(query) {
     image_type: 'photo',
     orientation: 'horisontal',
     safesearch: true,
-    per_page: 9,
+    per_page: 27,
   });
 
   return axios.get(`${ENDPOINT}?${queryParams}`);
 }
-
-// --- FUNCTIONS TO PERFORM HTTP REQUESTS ---
-
-// getImagesByQuery(query). Ця функція повинна приймати один параметр query (пошукове слово, яке є рядком), здійснювати HTTP-запит і повертати значення властивості data з отриманої відповіді.
